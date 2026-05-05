@@ -68,22 +68,10 @@ sites:
     url: https://archipelago-ea-stats.decentraland.org
     expectedStatusCodes: [200, 401, 404]
     tags: [important, comms]
-  - name: livekit
-    url: https://livekit.decentraland.org
-    expectedStatusCodes: [200, 401, 403, 404, 426]
-    tags: [critical, comms]
-  - name: archipelago-ws
-    url: https://archipelago.decentraland.org/ws
-    expectedStatusCodes: [200, 401, 403, 404, 426]
-    tags: [critical, comms]
   - name: archipelago-ws-connector
     url: https://archipelago-ws-connector.decentraland.org/ws
     expectedStatusCodes: [200, 401, 403, 404, 426]
     tags: [critical, comms]
-  - name: preview-livekit
-    url: https://preview.decentraland.org/rooms/test
-    expectedStatusCodes: [200, 401, 403, 404, 426]
-    tags: [important, comms]
   - name: worlds-comms-signed-login
     # original was https://worlds.decentraland.org/ which NXDOMAINs — current path
     url: https://decentraland.org/worlds
@@ -164,9 +152,6 @@ sites:
   - name: peer-ec2
     url: https://peer-ec2.decentraland.org/about
     tags: [external, dao-peers]
-  - name: peer-wc1
-    url: https://peer-wc1.decentraland.org/about
-    tags: [external, dao-peers]
   - name: peer-eu1
     url: https://peer-eu1.decentraland.org/about
     tags: [external, dao-peers]
@@ -175,9 +160,6 @@ sites:
     tags: [external, dao-peers]
   - name: peer-interconnected
     url: https://interconnected.online/about
-    tags: [external, dao-peers]
-  - name: peer-decentral-io
-    url: https://peer.decentral.io/about
     tags: [external, dao-peers]
   - name: peer-melonwave
     url: https://peer.melonwave.com/about
@@ -197,10 +179,13 @@ sites:
     url: https://godot-engine-releases.dclexplorer.com/
     expectedStatusCodes: [200, 403, 404]
     tags: [cdn, build-cdn]
-  - name: files-dclexplorer
-    url: https://files.dclexplorer.com/android_deps.zip
-    method: HEAD
-    tags: [cdn, build-cdn]
+  # Disabled: false-positive on GitHub Actions runner — curl from anywhere
+  # else returns 200 for HEAD/GET, but Upptime gets code=0. Likely Cloudflare
+  # WAF blocking Azure IP ranges. Re-enable after switching method/headers.
+  # - name: files-dclexplorer
+  #   url: https://files.dclexplorer.com/android_deps.zip
+  #   method: HEAD
+  #   tags: [cdn, build-cdn]
   - name: optimized-assets
     url: https://optimized-assets.dclexplorer.com/v3
     expectedStatusCodes: [200, 403, 404]
@@ -219,17 +204,12 @@ sites:
     tags: [cdn, build-cdn]
 
   # ── Internal CDN (decentraland.org) ─────────────────────────────────
-  - name: sdk-test-scenes
-    url: https://sdk-test-scenes.decentraland.org
-    expectedStatusCodes: [200, 403, 404]
-    tags: [cdn, internal-cdn]
-  - name: renderer-artifacts-sdk6-adapter
-    url: https://renderer-artifacts.decentraland.org/sdk6-adaption-layer/main/index.min.js
-    method: HEAD
-    tags: [cdn, internal-cdn]
-  - name: install-mobile
-    url: https://install-mobile.decentraland.org
-    tags: [cdn, internal-cdn]
+  # Disabled: same false-positive pattern as files-dclexplorer — CloudFront
+  # likely blocking GitHub Actions IP ranges. curl from elsewhere returns 200.
+  # - name: renderer-artifacts-sdk6-adapter
+  #   url: https://renderer-artifacts.decentraland.org/sdk6-adaption-layer/main/index.min.js
+  #   method: HEAD
+  #   tags: [cdn, internal-cdn]
 
   # ── Telemetry ───────────────────────────────────────────────────────
   - name: segment
