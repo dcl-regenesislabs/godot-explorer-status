@@ -1,0 +1,7 @@
+node_modules/
+.cache/
+.next/
+__sapper__/
+status-page/__sapper__/
+*.log
+.DS_Store

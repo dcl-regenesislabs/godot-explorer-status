@@ -1,0 +1,19 @@
+name: Response Time CI
+on:
+  repository_dispatch:
+    types: [response-time]
+  schedule:
+    - cron: "0 23 * * *"
+  workflow_dispatch:
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update response time
+        uses: upptime/uptime-monitor@v1
+        with:
+          command: "response-time"
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          SECRETS_CONTEXT: ${{ toJson(secrets) }}

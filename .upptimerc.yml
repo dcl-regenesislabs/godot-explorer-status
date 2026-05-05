@@ -1,0 +1,290 @@
+owner: dcl-regenesislabs
+repo: godot-explorer-status
+user-agent: godot-explorer-status-check/1.0
+delay: 0
+
+# Probes derived from scripts/status-check.ts (env=org / mainnet).
+# WSS endpoints are probed as plain HTTPS accepting 426 Upgrade Required —
+# this confirms the host is up while skipping the WebSocket handshake.
+sites:
+  # ── Catalyst / content (critical) ───────────────────────────────────
+  - name: realm-provider-ea
+    url: https://realm-provider-ea.decentraland.org/main/about
+    tags: [critical, catalyst]
+  - name: realm-provider
+    url: https://realm-provider.decentraland.org/main/about
+    tags: [critical, catalyst]
+  - name: peer-about
+    url: https://peer.decentraland.org/about
+    tags: [critical, catalyst]
+  - name: peer-content-status
+    url: https://peer.decentraland.org/content/status
+    tags: [critical, catalyst]
+  - name: peer-lambdas-status
+    url: https://peer.decentraland.org/lambdas/status
+    tags: [critical, catalyst]
+  - name: worlds-content-server
+    url: https://worlds-content-server.decentraland.org/status
+    tags: [critical, catalyst]
+  - name: sdk-team-cdn
+    url: https://sdk-team-cdn.decentraland.org/
+    expectedStatusCodes: [200, 403]
+    tags: [critical, catalyst]
+
+  # ── Auth (critical) ─────────────────────────────────────────────────
+  - name: auth-api-base
+    url: https://auth-api.decentraland.org
+    expectedStatusCodes: [200, 404]
+    tags: [critical, auth]
+  - name: auth-api-requests
+    url: https://auth-api.decentraland.org/requests
+    method: OPTIONS
+    expectedStatusCodes: [200, 204, 401, 404, 405]
+    tags: [critical, auth]
+  - name: auth-frontend
+    url: https://decentraland.org/auth/requests
+    tags: [critical, auth]
+  - name: auth-mobile-frontend
+    url: https://decentraland.org/auth/mobile
+    tags: [critical, auth]
+
+  # ── Comms (critical / important) ────────────────────────────────────
+  - name: comms-gatekeeper
+    url: https://comms-gatekeeper.decentraland.org/get-scene-adapter
+    method: OPTIONS
+    expectedStatusCodes: [200, 204, 401, 404, 405]
+    tags: [critical, comms]
+  - name: comms-gatekeeper-local
+    url: https://comms-gatekeeper-local.decentraland.org/get-scene-adapter
+    method: OPTIONS
+    expectedStatusCodes: [200, 204, 401, 404, 405]
+    tags: [important, comms]
+  # WSS probed as HTTPS (host-up check)
+  - name: social-service-rpc
+    url: https://rpc-social-service-ea.decentraland.org
+    expectedStatusCodes: [200, 400, 401, 404, 426]
+    tags: [critical, comms]
+  - name: archipelago-stats
+    url: https://archipelago-ea-stats.decentraland.org
+    expectedStatusCodes: [200, 401, 404]
+    tags: [important, comms]
+  - name: livekit
+    url: https://livekit.decentraland.org
+    expectedStatusCodes: [200, 401, 403, 404, 426]
+    tags: [critical, comms]
+  - name: archipelago-ws
+    url: https://archipelago.decentraland.org/ws
+    expectedStatusCodes: [200, 401, 403, 404, 426]
+    tags: [critical, comms]
+  - name: archipelago-ws-connector
+    url: https://archipelago-ws-connector.decentraland.org/ws
+    expectedStatusCodes: [200, 401, 403, 404, 426]
+    tags: [critical, comms]
+  - name: preview-livekit
+    url: https://preview.decentraland.org/rooms/test
+    expectedStatusCodes: [200, 401, 403, 404, 426]
+    tags: [important, comms]
+  - name: worlds-comms-signed-login
+    # original was https://worlds.decentraland.org/ which NXDOMAINs — current path
+    url: https://decentraland.org/worlds
+    expectedStatusCodes: [200, 401, 403, 404]
+    tags: [critical, comms]
+
+  # ── Web3 (critical) ─────────────────────────────────────────────────
+  - name: ethereum-rpc
+    url: https://rpc.decentraland.org/mainnet
+    expectedStatusCodes: [200, 400, 401, 404, 426]
+    tags: [critical, web3]
+
+  # ── Discovery (important) ───────────────────────────────────────────
+  - name: places-api
+    url: https://places.decentraland.org/api/places?limit=1
+    tags: [important, discovery]
+  - name: events-api
+    url: https://events.decentraland.org/api/events?limit=1
+    tags: [important, discovery]
+  - name: jump-events
+    url: https://decentraland.org/jump/events
+    expectedStatusCodes: [200, 301, 302, 404]
+    tags: [important, discovery]
+
+  # ── Mobile BFF (important) ──────────────────────────────────────────
+  - name: mobile-bff
+    url: https://mobile-bff.decentraland.org
+    expectedStatusCodes: [200, 401, 404]
+    tags: [important, mobile]
+  - name: mobile-bff-destinations
+    url: https://mobile-bff.decentraland.org/destinations
+    expectedStatusCodes: [200, 401, 404]
+    tags: [important, mobile]
+  - name: mobile-bff-events
+    url: https://mobile-bff.decentraland.org/events
+    expectedStatusCodes: [200, 401, 404]
+    tags: [important, mobile]
+  - name: mobile-bff-deletion
+    url: https://mobile-bff.decentraland.org/deletion
+    method: OPTIONS
+    expectedStatusCodes: [200, 204, 401, 404, 405]
+    tags: [important, mobile]
+
+  # ── Notifications / Marketplace / OpenSea (important) ───────────────
+  - name: notifications
+    url: https://notifications.decentraland.org
+    expectedStatusCodes: [200, 401, 404]
+    tags: [important, notifications]
+  - name: frontend-host
+    url: https://decentraland.org
+    tags: [important, frontend]
+  - name: marketplace
+    url: https://decentraland.org/marketplace
+    tags: [important, frontend]
+  - name: marketplace-claim-name
+    url: https://decentraland.org/marketplace/names/claim
+    tags: [important, frontend]
+  - name: opensea-proxy
+    url: https://opensea.decentraland.org
+    expectedStatusCodes: [200, 401, 404]
+    tags: [important, frontend]
+
+  # ── Legal pages ─────────────────────────────────────────────────────
+  - name: privacy
+    url: https://decentraland.org/privacy
+    tags: [external, legal]
+  - name: terms
+    url: https://decentraland.org/terms
+    tags: [external, legal]
+  - name: content-policy
+    url: https://decentraland.org/content
+    tags: [external, legal]
+
+  # ── DAO peer servers ────────────────────────────────────────────────
+  - name: peer-ec1
+    url: https://peer-ec1.decentraland.org/about
+    tags: [external, dao-peers]
+  - name: peer-ec2
+    url: https://peer-ec2.decentraland.org/about
+    tags: [external, dao-peers]
+  - name: peer-wc1
+    url: https://peer-wc1.decentraland.org/about
+    tags: [external, dao-peers]
+  - name: peer-eu1
+    url: https://peer-eu1.decentraland.org/about
+    tags: [external, dao-peers]
+  - name: peer-ap1
+    url: https://peer-ap1.decentraland.org/about
+    tags: [external, dao-peers]
+  - name: peer-interconnected
+    url: https://interconnected.online/about
+    tags: [external, dao-peers]
+  - name: peer-decentral-io
+    url: https://peer.decentral.io/about
+    tags: [external, dao-peers]
+  - name: peer-melonwave
+    url: https://peer.melonwave.com/about
+    tags: [external, dao-peers]
+  - name: peer-kyllian
+    url: https://peer.kyllian.me/about
+    tags: [external, dao-peers]
+  - name: peer-uadevops
+    url: https://peer.uadevops.com/about
+    tags: [external, dao-peers]
+  - name: peer-dclnodes
+    url: https://peer.dclnodes.io/about
+    tags: [external, dao-peers]
+
+  # ── Build CDN (dclexplorer) ─────────────────────────────────────────
+  - name: godot-engine-releases
+    url: https://godot-engine-releases.dclexplorer.com/
+    expectedStatusCodes: [200, 403, 404]
+    tags: [cdn, build-cdn]
+  - name: files-dclexplorer
+    url: https://files.dclexplorer.com/android_deps.zip
+    method: HEAD
+    tags: [cdn, build-cdn]
+  - name: optimized-assets
+    url: https://optimized-assets.dclexplorer.com/v3
+    expectedStatusCodes: [200, 403, 404]
+    tags: [cdn, build-cdn]
+  - name: benchmark-scenes
+    url: https://benchmark-scenes.dclexplorer.com/
+    expectedStatusCodes: [200, 403, 404]
+    tags: [cdn, build-cdn]
+  - name: benchmark-reports
+    url: https://benchmark-reports.dclexplorer.com/
+    expectedStatusCodes: [200, 403, 404]
+    tags: [cdn, build-cdn]
+  - name: mobile-deeplink
+    url: https://mobile.dclexplorer.com/open
+    expectedStatusCodes: [200, 301, 302, 307, 308, 400]
+    tags: [cdn, build-cdn]
+
+  # ── Internal CDN (decentraland.org) ─────────────────────────────────
+  - name: sdk-test-scenes
+    url: https://sdk-test-scenes.decentraland.org
+    expectedStatusCodes: [200, 403, 404]
+    tags: [cdn, internal-cdn]
+  - name: renderer-artifacts-sdk6-adapter
+    url: https://renderer-artifacts.decentraland.org/sdk6-adaption-layer/main/index.min.js
+    method: HEAD
+    tags: [cdn, internal-cdn]
+  - name: install-mobile
+    url: https://install-mobile.decentraland.org
+    tags: [cdn, internal-cdn]
+
+  # ── Telemetry ───────────────────────────────────────────────────────
+  - name: segment
+    url: https://api.segment.io/v1/batch
+    method: OPTIONS
+    expectedStatusCodes: [200, 204, 400, 401, 405]
+    tags: [telemetry]
+  - name: sentry-ingest
+    url: https://o4510187684298752.ingest.us.sentry.io/api/4510187688361984/envelope/
+    method: OPTIONS
+    expectedStatusCodes: [200, 204, 400, 401, 403, 405]
+    tags: [telemetry]
+
+  # ── External (community / app stores) ───────────────────────────────
+  - name: discord-support
+    url: https://discord.com/
+    tags: [external]
+  - name: google-play
+    # Verified package id is org.decentraland.godotexplorer (200);
+    # original org.decentraland.explorer 404s.
+    url: https://play.google.com/store/apps/details?id=org.decentraland.godotexplorer
+    tags: [external]
+  - name: opensea-public
+    url: https://opensea.io/
+    tags: [external]
+
+status-website:
+  cname: ""
+  baseUrl: /godot-explorer-status
+  name: Decentraland Godot Explorer — Status
+  introTitle: "**godot-explorer** runtime &amp; build endpoint health"
+  introMessage: >
+    Live uptime monitoring of every external service the
+    [Decentraland Godot Explorer](https://github.com/decentraland/godot-explorer)
+    client depends on. Probes run every 5 minutes from GitHub Actions.
+  navbar:
+    - title: Status
+      href: /
+    - title: GitHub
+      href: https://github.com/dcl-regenesislabs/godot-explorer-status
+    - title: Catalog
+      href: https://github.com/dcl-regenesislabs/godot-explorer-status/blob/main/docs/CATALOG.md
+
+assignees:
+  - leanmendoza
+
+# Open a GitHub Issue when a probe goes down; close it when it recovers.
+notifications: []
+
+# Workflow tuning
+workflowSchedule:
+  graphs: "0 0 * * *"
+  responseTime: "0 23 * * *"
+  staticSite: "0 1 * * *"
+  summary: "0 0 * * *"
+  updateTemplate: "0 3 * * *"
+  updates: "0 3 * * *"
+  uptime: "*/5 * * * *"

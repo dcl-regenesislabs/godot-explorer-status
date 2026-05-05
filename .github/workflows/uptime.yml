@@ -1,0 +1,25 @@
+name: Uptime CI
+on:
+  repository_dispatch:
+    types: [uptime]
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update template
+        uses: upptime/uptime-monitor@v1
+        with:
+          command: "update-template"
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+      - name: Check endpoint status
+        uses: upptime/uptime-monitor@v1
+        with:
+          command: "update"
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          SECRETS_CONTEXT: ${{ toJson(secrets) }}
