@@ -1,7 +1,7 @@
 url: https://peer.dclnodes.io/about
-status: up
-code: 200
-responseTime: 465
-lastUpdated: 2026-07-29T23:57:47.917Z
+status: down
+code: 503
+responseTime: 624
+lastUpdated: 2026-07-30T16:22:15.001Z
 startTime: 2026-05-05T13:53:18.925Z
 generator: Upptime <https://github.com/upptime/upptime>
