@@ -1,7 +1,7 @@
 url: https://peer-eu1.decentraland.org/about
-status: up
-code: 200
-responseTime: 177
-lastUpdated: 2026-08-12T23:33:45.760Z
+status: down
+code: 503
+responseTime: 186
+lastUpdated: 2026-08-13T15:04:35.737Z
 startTime: 2026-05-05T13:52:01.021Z
 generator: Upptime <https://github.com/upptime/upptime>
