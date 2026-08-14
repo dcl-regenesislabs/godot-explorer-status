@@ -1,7 +1,7 @@
 url: https://peer-ec2.decentraland.org/about
-status: up
-code: 200
-responseTime: 307
-lastUpdated: 2026-08-14T23:14:51.615Z
+status: down
+code: 503
+responseTime: 242
+lastUpdated: 2026-08-14T23:59:13.271Z
 startTime: 2026-05-05T13:51:36.187Z
 generator: Upptime <https://github.com/upptime/upptime>
